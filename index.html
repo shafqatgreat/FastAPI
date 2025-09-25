@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Token Example</title>
+</head>
+<body>
+  <h2>Send API Request with Header</h2>
+  <button onclick="sendRequest()">Send Request</button>
+  <pre id="result"></pre>
+
+  <script>
+async function sendRequest() {
+  try {
+    let response = await fetch("http://127.0.0.1:8000/secure-data", {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer mysecrettoken123",
+        "Content-Type": "application/json"
+      }
+    });
+
+    let text = await response.text(); // see raw response
+    console.log("Raw response:", text);
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = { raw: text };
+    }
+
+    document.getElementById("result").textContent = JSON.stringify(data, null, 2);
+  } catch (err) {
+    console.error("Error:", err);
+  }
+}
+</script>
+
+</body>
+</html>
