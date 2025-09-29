@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>FastAPI — Send Profile Info</title>
+  <style>
+    body { font-family: system-ui; padding: 28px; }
+    .card { max-width: 500px; margin: auto; background: #f9fafb; padding: 20px; border-radius: 10px; }
+    label { display: block; margin-top: 10px; }
+    input { width: 100%; padding: 8px; margin-top: 4px; border-radius: 6px; border: 1px solid #ddd; }
+    button { margin-top: 14px; padding: 10px; border: none; border-radius: 8px; background: #2563eb; color: white; cursor: pointer; }
+    pre { background: #111; color: #eee; padding: 10px; border-radius: 6px; margin-top: 14px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Send Profile Info</h2>
+
+    <label>Name <input id="name" type="text" value="Alice Johnson"></label>
+    <label>Email <input id="email" type="email" value="alice@example.com"></label>
+    <label>Age <input id="age" type="number" value="28"></label>
+
+    <button id="sendBtn">Send Profile</button>
+
+    <pre id="result">{ "status": "waiting" }</pre>
+  </div>
+
+  <script>
+    const API_URL = "http://127.0.0.1:8000/profile";
+
+    document.getElementById("sendBtn").addEventListener("click", async () => {
+      const profile = {
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        age: parseInt(document.getElementById("age").value.trim(), 10)
+      };
+
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(profile)
+        });
+
+        const text = await res.text();
+        let data;
+        try { data = JSON.parse(text); } catch { data = { raw: text }; }
+
+        document.getElementById("result").textContent =
+          JSON.stringify({ httpStatus: res.status, body: data }, null, 2);
+
+      } catch (err) {
+        document.getElementById("result").textContent = "Network error: " + err;
+      }
+    });
+  </script>
+</body>
+</html>
