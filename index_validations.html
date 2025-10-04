@@ -1,0 +1,136 @@
+# ================================
+# 1️⃣ Basic Field Validation
+# ================================
+
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Basic User Validation</h2>
+  <form id="basicForm">
+    Name: <input type="text" id="name"><br>
+    Age: <input type="number" id="age"><br>
+    Email: <input type="email" id="email"><br>
+    <button type="button" onclick="submitForm()">Submit</button>
+  </form>
+
+  <pre id="result"></pre>
+
+  <script>
+    async function submitForm() {
+      let data = {
+        name: document.getElementById("name").value,
+        age: document.getElementById("age").value,
+        email: document.getElementById("email").value
+      };
+      let res = await fetch("http://127.0.0.1:8000/basic-user", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+      });
+      document.getElementById("result").innerText = await res.text();
+    }
+  </script>
+</body>
+</html>
+
+
+# =======================================
+# 2️⃣ Advanced Field Types & Constraints
+# =======================================
+
+
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Product Validation</h2>
+  <form>
+    Name: <input type="text" id="name"><br>
+    Quantity: <input type="number" id="quantity"><br>
+    Website: <input type="url" id="website"><br>
+    <button type="button" onclick="submitForm()">Submit</button>
+  </form>
+  <pre id="result"></pre>
+
+  <script>
+    async function submitForm() {
+      let data = {
+        name: document.getElementById("name").value,
+        quantity: document.getElementById("quantity").value,
+        website: document.getElementById("website").value
+      };
+      let res = await fetch("http://127.0.0.1:8000/product", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+      });
+      document.getElementById("result").innerText = await res.text();
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+# ================================
+# # 3️⃣ Cross-Field Validation
+# ================================
+
+
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Booking Validation</h2>
+  <form>
+    Start Date: <input type="date" id="start"><br>
+    End Date: <input type="date" id="end"><br>
+    <button type="button" onclick="submitForm()">Submit</button>
+  </form>
+  <pre id="result"></pre>
+
+  <script>
+    async function submitForm() {
+      let data = {
+        start_date: document.getElementById("start").value,
+        end_date: document.getElementById("end").value
+      };
+      let res = await fetch("http://127.0.0.1:8000/booking", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+      });
+      document.getElementById("result").innerText = await res.text();
+    }
+  </script>
+</body>
+</html>
+
+
+# =========================================
+# # 4️⃣ Manual Validation Inside Endpoint
+# =========================================
+
+
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Register User</h2>
+  <form>
+    Username: <input type="text" id="username"><br>
+    Email: <input type="email" id="email"><br>
+    <button type="button" onclick="submitForm()">Submit</button>
+  </form>
+  <pre id="result"></pre>
+
+  <script>
+    async function submitForm() {
+      let data = {
+        username: document.getElementById("username").value,
+        email: document.getElementById("email").value
+      };
+      let res = await fetch("http://127.0.0.1:8000/register", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+      });
+      document.getElementById("result").innerText = await res.text();
+    }
+  </script>
+</body>
+</html>
